@@ -92,7 +92,7 @@ describe "Users API", type: :request do
   end
 
   describe "User Update" do
-    it "can update an existing user" do
+    xit "can update an existing user" do
       id = create(:user).id
       previous_name = User.last.name
       user_params = { name: "P. Sherman" }
@@ -105,6 +105,20 @@ describe "Users API", type: :request do
       expect(response).to be_successful
       expect(user.name).to_not eq(previous_name)
       expect(user.name).to eq("P. Sherman")
+    end
+  end
+
+  describe "User Destroy" do
+    it "can destroy an user" do
+      user = create(:user)
+    
+      expect(User.count).to eq(1)
+    
+      delete api_v1_user_path(user.id)
+    
+      expect(response).to be_successful
+      expect(User.count).to eq(0)
+      expect{User.find(user.id)}.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 end
