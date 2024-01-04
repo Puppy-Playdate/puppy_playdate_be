@@ -102,6 +102,19 @@ describe "Users API", type: :request do
       expect(user.name).to_not eq(previous_name)
       expect(user.name).to eq("P. Sherman")
     end
+
+    it "sad path; will send an error if user is not created" do 
+      user_params = ({
+        name: "",
+        email: 'james.p.sullivan@aol.com',
+        password: "gw45635yhethet5"
+      })
+      headers = {"CONTENT_TYPE" => "application/json"}
+  
+      post api_v1_users_path, headers: headers, params: JSON.generate(user: user_params)
+      expect(response).to_not be_successful 
+      expect(response).to have_http_status(401)
+    end
   end
 
   describe "User Destroy" do
