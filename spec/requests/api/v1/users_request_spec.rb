@@ -10,22 +10,22 @@ describe "Users API", type: :request do
       expect(response).to be_successful
 
       users = JSON.parse(response.body, symbolize_names: true)
-      expect(users.count).to eq(5)
-
-      users.each do |user|
-        expect(users).to be_an(Array)
+      expect(users[:data].count).to eq(5)
+      # require 'pry'; binding.pry
+      users[:data].each do |user|
+        expect(users).to be_a(Hash)
+        expect(users[:data]).to be_an(Array)
         
         expect(user).to have_key(:id)
-        expect(user[:id]).to be_an(Integer)
+        expect(user[:id]).to be_an(String)
+        
+        expect(user).to have_key(:attributes)
+        
+        expect(user[:attributes]).to have_key(:name)
+        expect(user[:attributes][:name]).to be_a(String)
 
-        expect(user).to have_key(:name)
-        expect(user[:name]).to be_a(String)
-
-        expect(user).to have_key(:email)
-        expect(user[:email]).to be_a(String)
-
-        expect(user).to have_key(:password_digest)
-        expect(user[:password_digest]).to be_a(String)
+        expect(user[:attributes]).to have_key(:email)
+        expect(user[:attributes][:email]).to be_a(String)
       end
     end
   end
@@ -42,17 +42,14 @@ describe "Users API", type: :request do
       
       expect(user).to be_a(Hash)
       
-      expect(user).to have_key(:id)
-      expect(user[:id]).to be_an(Integer)
+      expect(user[:data]).to have_key(:id)
+      expect(user[:data][:id]).to be_an(String)
   
-      expect(user).to have_key(:name)
-      expect(user[:name]).to be_a(String)
+      expect(user[:data][:attributes]).to have_key(:name)
+      expect(user[:data][:attributes][:name]).to be_a(String)
   
-      expect(user).to have_key(:email)
-      expect(user[:email]).to be_a(String)
-  
-      expect(user).to have_key(:password_digest)
-      expect(user[:password_digest]).to be_a(String)
+      expect(user[:data][:attributes]).to have_key(:email)
+      expect(user[:data][:attributes][:email]).to be_a(String)
     end
   end
 
@@ -95,10 +92,10 @@ describe "Users API", type: :request do
     it "can update an existing user" do
       id = create(:user).id
       previous_name = User.last.name
-      user_params = { name: "P. Sherman" }
+      user_param = { name: "P. Sherman" }
       headers = {"CONTENT_TYPE" => "application/json"}
     
-      patch api_v1_user_path(id), headers: headers, params: JSON.generate({user: user_params})
+      patch api_v1_user_path(id), headers: headers, params: JSON.generate({user: user_param})
   
       user = User.find_by(id: id)
       expect(response).to be_successful

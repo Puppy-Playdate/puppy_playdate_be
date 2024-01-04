@@ -5,12 +5,12 @@ class Api::V1::UsersController < ApplicationController
   def index
     @users = User.all
 
-    render json: @users
+    render json: UserSerializer.new(@users)
   end
 
   # GET /api/v1/users/1
   def show
-    render json: @user
+    render json: UserSerializer.new(@user)
   end
 
   # POST /api/v1/users
@@ -18,19 +18,18 @@ class Api::V1::UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      render json: @user, status: :created
+      render json: UserSerializer.new(@user), status: :created
     else
-      render json: @user.errors, status: :unauthorized
+      render json: { error: 'Invalid parameters' }, status: :unauthorized
     end
   end
 
   # PATCH/PUT /api/v1/users/1
   def update
-    # require 'pry'; binding.pry
-    if @user.update!(user_params)
-      render json: @user, status: :ok
+    if @user.update(user_params)
+      render json: UserSerializer.new(@user), status: :accepted
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: { error: 'Invalid parameters' }, status: :not_found
     end
   end
 
