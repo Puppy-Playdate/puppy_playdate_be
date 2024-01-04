@@ -93,15 +93,15 @@ describe "Users API", type: :request do
 
   describe "User Update" do
     it "can update an existing user" do
+      # require 'pry'; binding.pry
       id = create(:user).id
       previous_name = User.last.name
       user_params = { name: "P. Sherman" }
       headers = {"CONTENT_TYPE" => "application/json"}
     
-      patch api_v1_users_path(id), headers: headers, params: JSON.generate(user: user_params)
+      patch api_v1_user_path(id), headers: headers, params: JSON.generate({user: user_params})
   
       user = User.find_by(id: id)
-
       expect(response).to be_successful
       expect(user.name).to_not eq(previous_name)
       expect(user.name).to eq("P. Sherman")
