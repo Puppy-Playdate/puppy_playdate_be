@@ -5,12 +5,12 @@ class DogsController < ApplicationController
   def index
     @dogs = Dog.all
 
-    render json: @dogs
+    render json: DogSerializer.new(@dogs)
   end
 
   # GET /dogs/1
   def show
-    render json: @dog
+    render json: DogSerializer.new(@dogs)
   end
 
   # POST /dogs
@@ -18,18 +18,18 @@ class DogsController < ApplicationController
     @dog = Dog.new(dog_params)
 
     if @dog.save
-      render json: @dog, status: :created, location: @dog
+      render json: DogSerializer.new(@dogs), status: :created
     else
-      render json: @dog.errors, status: :unprocessable_entity
+      render json: { error: 'Invalid parameters' }, status: :unauthorized
     end
   end
 
   # PATCH/PUT /dogs/1
   def update
     if @dog.update(dog_params)
-      render json: @dog
+      render json: DogSerializer.new(@dogs)
     else
-      render json: @dog.errors, status: :unprocessable_entity
+      render json: { error: 'Invalid parameters' }, status: :not_found
     end
   end
 
