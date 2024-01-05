@@ -101,6 +101,7 @@ describe "Users API", type: :request do
       expect(response).to be_successful
       expect(user.name).to_not eq(previous_name)
       expect(user.name).to eq("P. Sherman")
+      expect(user.email).to eq(user.email)
     end
 
     it "sad path; will send an error if user is not created" do 
