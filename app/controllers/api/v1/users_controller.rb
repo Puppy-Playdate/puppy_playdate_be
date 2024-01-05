@@ -29,7 +29,7 @@ class Api::V1::UsersController < ApplicationController
     if @user.update(user_params)
       render json: UserSerializer.new(@user), status: :accepted
     else
-      render json: { error: 'Invalid parameters' }, status: :not_found
+      render json: { error: @user.errors.full_messages }, status: :not_found
     end
   end
 

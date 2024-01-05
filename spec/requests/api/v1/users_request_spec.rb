@@ -60,10 +60,7 @@ describe "Users API", type: :request do
                       email: 'james.p.sullivan@aol.com',
                       password: "gw45635yhethet5"
                     })
-      # headers = {"CONTENT_TYPE" => "application/json"}
-      # post api_v1_users_path, headers: headers, params: JSON.generate(user: user_params)
-
-      #Above (line:63-64) is what was here, and below ln:67 is the new suggestion `EB`
+      
       post api_v1_users_path, params: user_params
       
       created_user = User.last
@@ -96,8 +93,6 @@ describe "Users API", type: :request do
       previous_name = User.last.name
       user_param = { name: "P. Sherman" }
       headers = {"CONTENT_TYPE" => "application/json"}
-    
-      # patch api_v1_user_path(id), headers: headers, params: JSON.generate({user: user_param})
       
       patch api_v1_user_path(id), params: user_param
   
