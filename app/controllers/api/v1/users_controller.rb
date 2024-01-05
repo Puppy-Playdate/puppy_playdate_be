@@ -20,7 +20,7 @@ class Api::V1::UsersController < ApplicationController
     if @user.save
       render json: UserSerializer.new(@user), status: :created
     else
-      render json: { error: 'Invalid parameters' }, status: :unauthorized
+      render json: { error: @user.errors.full_messages }, status: :unauthorized
     end
   end
 
@@ -29,7 +29,7 @@ class Api::V1::UsersController < ApplicationController
     if @user.update(user_params)
       render json: UserSerializer.new(@user), status: :accepted
     else
-      render json: { error: 'Invalid parameters' }, status: :not_found
+      render json: { error: @user.errors.full_messages }, status: :not_found
     end
   end
 
@@ -46,6 +46,6 @@ class Api::V1::UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:name, :email, :password)
+      params.permit(:name, :email, :password)
     end
 end
