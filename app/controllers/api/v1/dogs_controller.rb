@@ -1,5 +1,6 @@
 class Api::V1::DogsController < ApplicationController
   before_action :set_dog, only: %i[ show update destroy ]
+  before_action :set_user, only: %i[ create update destroy ]
 
   def index
     @dogs = Dog.all
@@ -8,24 +9,26 @@ class Api::V1::DogsController < ApplicationController
   end
 
   def show
-    render json: DogSerializer.new(@dogs)
+    render json: DogSerializer.new(@dog)
   end
 
   def create
-    @dog = Dog.new(dog_params)
+    @dog = @user.dogs.new(dog_params)
 
     if @dog.save
-      render json: DogSerializer.new(@dogs), status: :created
+      render json: DogSerializer.new(@dog), status: :created
     else
-      render json: { error: 'Invalid parameters' }, status: :unauthorized
+      render json: { error: @dog.errors.full_messages }, status: :unauthorized
     end
   end
 
   def update
-    if @dog.update(dog_params)
-      render json: DogSerializer.new(@dogs)
+    # require 'pry'; binding.pry
+    @dog = @user.dogs.find(params[:id])
+    if @dog.update!(dog_params)
+      render json: DogSerializer.new(@dog)
     else
-      render json: { error: 'Invalid parameters' }, status: :not_found
+      render json: { error: @dog.errors.full_messages }, status: :not_found
     end
   end
 
@@ -34,11 +37,15 @@ class Api::V1::DogsController < ApplicationController
   end
 
   private
+    def set_user
+      @user = User.find(params[:user_id])
+    end
+
     def set_dog
       @dog = Dog.find(params[:id])
     end
 
     def dog_params
-      params.require(:dog).permit(:name, :breed, :age, :size, :neutered)
+      params.permit(:name, :breed, :age, :size, :neutered)
     end
 end

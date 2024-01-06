@@ -4,6 +4,6 @@ FactoryBot.define do
     breed { Faker::Creature::Dog.breed }
     age { Faker::Number.between(from: 1, to: 15) }
     size { Dog.sizes.values.sample }  
-    neutered { [true, false].sample }
+    neutered { Faker::Boolean.boolean }
   end
 end
