@@ -23,12 +23,11 @@ class Api::V1::DogsController < ApplicationController
   end
 
   def update
-    # require 'pry'; binding.pry
-    @dog = @user.dogs.find(params[:id])
-    if @dog.update!(dog_params)
-      render json: DogSerializer.new(@dog)
+    @user_dog = @user.dogs.find(params[:id])
+    if @user_dog.update!(dog_params)
+      render json: DogSerializer.new(@user_dog)
     else
-      render json: { error: @dog.errors.full_messages }, status: :not_found
+      render json: { error: @user_dog.errors.full_messages }, status: :unprocessible_entity
     end
   end
 

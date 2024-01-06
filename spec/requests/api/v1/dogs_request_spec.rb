@@ -122,38 +122,35 @@ describe "Dogs API", type: :request do
       previous_name = Dog.last.name
       dog_param = { name: "P. Sherman" }
       headers = {"CONTENT_TYPE" => "application/json"}
-    
-      # require 'pry'; binding.pry
-      patch api_v1_user_dog_path(user.id, dog.id), headers: headers, params: JSON.generate(dog: dog_param)
+
+      patch api_v1_user_dog_path(user.id, dog.id), params: dog_param
       up_dog = Dog.find_by(id: dog.id)
-      # require 'pry'; binding.pry
       expect(response).to be_successful
       expect(up_dog.name).to_not eq(previous_name)
       expect(up_dog.name).to eq("P. Sherman")
     end
 
     it "sad path; will send an error if dog is not created" do 
-      dog_params = ({
-        name: "",
-        email: 'james.p.sullivan@aol.com',
-        password: "gw45635yhethet5"
-      })
+      user = create(:user)
+      dog = create(:dog, user: user)
+      previous_name = Dog.last.name
+      dog_param = { name: "" }
       headers = {"CONTENT_TYPE" => "application/json"}
   
-      post api_v1_dogs_path, headers: headers, params: JSON.generate(dog: dog_params)
+      patch api_v1_user_dog_path(user.id, dog.id), params: dog_param
       expect(response).to_not be_successful 
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(422)
     end
   end
 
   describe "Dog Destroy" do
     it "can destroy an dog" do
-      
-      dog = create(:dog)
+      user = create(:user)
+      dog = create(:dog, user: user)
     
       expect(Dog.count).to eq(1)
     
-      delete api_v1_dog_path(dog.id)
+      delete api_v1_user_dog_path(user.id, dog.id)
     
       expect(response).to be_successful
       expect(Dog.count).to eq(0)

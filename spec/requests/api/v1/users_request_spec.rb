@@ -35,7 +35,6 @@ describe "Users API", type: :request do
       id = create(:user).id
 
       get api_v1_user_path(id)
-  https://backend.turing.edu/module3/lessons/intro_to_oauth
       user = JSON.parse(response.body, symbolize_names: true)
   
       expect(response).to be_successful
