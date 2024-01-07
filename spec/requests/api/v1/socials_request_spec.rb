@@ -4,7 +4,8 @@ describe "Socials API", type: :request do
   describe "Socials Index" do
     it "sends a list of socials" do
       user = create(:user)
-      dog_list = create_list(:dog, 5, user: user)
+      up_dog = create(:dog, user: user)
+      social = create(:social, user: user)
 
       get api_v1_user_dogs_path(user.id, dog_list)
 
@@ -41,8 +42,8 @@ describe "Socials API", type: :request do
     end
   end
 
-  describe "Dog Show" do
-    it "can get one Dog by its id" do
+  describe "Socials Show" do
+    it "can get one Social by its id" do
       user = create(:user)
       dog = create(:dog, user: user)
       
