@@ -7,12 +7,12 @@ describe "Socials API", type: :request do
       up_dog = create(:dog, user: user)
       social = create(:social)
       user_social = UserSocial.create!(user_id: user.id, social_id: social.id)
-      require 'pry'; binding.pry
-      get api_v1_user_dogs_path(user.id, dog_list)
+
+      get api_v1_socials_path(user_social)
 
       expect(response).to be_successful
 
-      dogs = JSON.parse(response.body, symbolize_names: true)
+      socials = JSON.parse(response.body, symbolize_names: true)
 
       expect(dogs[:data].count).to eq(5)
 
