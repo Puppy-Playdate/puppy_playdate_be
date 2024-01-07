@@ -1,5 +1,5 @@
 class Social < ApplicationRecord
-  validates :name, :description, :event_date, :event_type, presence: true 
+  validates :name, :description, :location, :event_date, :event_type, presence: true 
   enum event_type: {
     chill: 0,
     playdate: 1,
