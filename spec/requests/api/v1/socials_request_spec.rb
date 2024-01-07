@@ -3,42 +3,45 @@ require 'rails_helper'
 describe "Socials API", type: :request do
   describe "Socials Index" do
     it "sends a list of socials" do
-      user = create(:user)
-      up_dog = create(:dog, user: user)
-      social = create(:social)
-      user_social = UserSocial.create!(user_id: user.id, social_id: social.id)
+      # user = create(:user)
+      # up_dog = create(:dog, user: user)
+      socials_list = create_list(:social, 5)
+      # user_social = UserSocial.create!(user_id: user.id, social_id: socials_list.first.id)
+      # user_social = UserSocial.create!(user_id: user.id, social_id: socials_list.last.id)
+      
+      # This commented portion of test data I believe will be needed more for a Users socials index and a users socials show page. Only created socials since a social does not belong to a user but shares a relation via the join page   
 
-      get api_v1_socials_path(user_social)
-
+      get api_v1_socials_path
+      
       expect(response).to be_successful
 
       socials = JSON.parse(response.body, symbolize_names: true)
-
-      expect(dogs[:data].count).to eq(5)
-
-      dogs[:data].each do |dog|
-        expect(dogs).to be_a(Hash)
-        expect(dogs[:data]).to be_an(Array)
+      expect(socials[:data].count).to eq(5)
+      
+      socials[:data].each do |social|
+        expect(social).to be_a(Hash)
+        # require 'pry'; binding.pry
+        expect(socials[:data]).to be_an(Array)
         
-        expect(dog).to have_key(:id)
-        expect(dog[:id]).to be_an(String)
+        expect(social).to have_key(:id)
+        expect(social[:id]).to be_an(String)
         
-        expect(dog).to have_key(:attributes)
+        expect(social).to have_key(:attributes)
         
-        expect(dog[:attributes]).to have_key(:name)
-        expect(dog[:attributes][:name]).to be_a(String)
+        expect(social[:attributes]).to have_key(:name)
+        expect(social[:attributes][:name]).to be_a(String)
 
-        expect(dog[:attributes]).to have_key(:breed)
-        expect(dog[:attributes][:breed]).to be_a(String)
+        expect(social[:attributes]).to have_key(:breed)
+        expect(social[:attributes][:breed]).to be_a(String)
 
-        expect(dog[:attributes]).to have_key(:age)
-        expect(dog[:attributes][:age]).to be_a(Integer)
+        expect(social[:attributes]).to have_key(:age)
+        expect(social[:attributes][:age]).to be_a(Integer)
 
-        expect(dog[:attributes]).to have_key(:size)
-        expect(dog[:attributes][:size]).to be_a(String)
+        expect(social[:attributes]).to have_key(:size)
+        expect(social[:attributes][:size]).to be_a(String)
 
-        expect(dog[:attributes]).to have_key(:neutered)
-        expect(dog[:attributes][:neutered]).to be_a(TrueClass).or be_a(FalseClass)
+        expect(social[:attributes]).to have_key(:neutered)
+        expect(social[:attributes][:neutered]).to be_a(TrueClass).or be_a(FalseClass)
       end
     end
   end
