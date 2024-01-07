@@ -1,4 +1,4 @@
-class UserSocial < ApplicationController
-  belongs_to :users
-  belongs_to :socials 
+class UserSocial < ApplicationRecord
+  belongs_to :user
+  belongs_to :social 
 end

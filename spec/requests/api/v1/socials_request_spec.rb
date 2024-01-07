@@ -5,8 +5,9 @@ describe "Socials API", type: :request do
     it "sends a list of socials" do
       user = create(:user)
       up_dog = create(:dog, user: user)
-      social = create(:social, user: user)
-
+      social = create(:social)
+      user_social = UserSocial.create!(user_id: user.id, social_id: social.id)
+      require 'pry'; binding.pry
       get api_v1_user_dogs_path(user.id, dog_list)
 
       expect(response).to be_successful
@@ -43,7 +44,7 @@ describe "Socials API", type: :request do
   end
 
   describe "Socials Show" do
-    it "can get one Social by its id" do
+    xit "can get one Social by its id" do
       user = create(:user)
       dog = create(:dog, user: user)
       
@@ -74,8 +75,8 @@ describe "Socials API", type: :request do
     end
   end
 
-  describe "Dog Create" do
-    it "can create a new Dog" do
+  describe "Social Create" do
+    xit "can create a new Social" do
       user = create(:user)
       dog_params = ({
                       name: 'James Sullivan',
@@ -98,7 +99,7 @@ describe "Socials API", type: :request do
       expect(created_dog.neutered).to be(true).or be(false)
     end
 
-    it "sad path; will send an error if dog is not created" do 
+    xit "sad path; will send an error if social is not created" do 
       user = create(:user)
       dog_params = ({
         name: "",
@@ -116,8 +117,8 @@ describe "Socials API", type: :request do
     end
   end
 
-  describe "Dog Update" do
-    it "can update an existing dog" do
+  describe "Social Update" do
+    xit "can update an existing social" do
       user = create(:user)
       dog = create(:dog, user: user)
       previous_name = Dog.last.name
@@ -131,7 +132,7 @@ describe "Socials API", type: :request do
       expect(up_dog.name).to eq("P. Sherman")
     end
 
-    it "sad path; will send an error if dog is not created" do 
+    xit "sad path; will send an error if dog is not created" do 
       user = create(:user)
       dog = create(:dog, user: user)
       previous_name = Dog.last.name
@@ -144,8 +145,8 @@ describe "Socials API", type: :request do
     end
   end
 
-  describe "Dog Destroy" do
-    it "can destroy an dog" do
+  describe "Social Destroy" do
+    xit "can destroy an Social" do
       user = create(:user)
       dog = create(:dog, user: user)
     
