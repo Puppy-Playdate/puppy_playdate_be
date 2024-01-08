@@ -14,17 +14,17 @@ class Api::V1::SocialsController < ApplicationController
     render json: SocialSerializer.new(@social)
   end
 
-  # POST /api/v1/socials
-  # def create
-  #   require 'pry'; binding.pry
-  #   @social = Social.new(social_params)
+  # POST /api/v1/user_id/socials
+  def create
+    require 'pry'; binding.pry
+    @social = @user.socials.new(social_params)
 
-  #   if @social.save
-  #     render json: SocialSerializer.new(@social)
-  #   else
-  #     render json: { error: @social.errors.full_messages }, status: :unauthorized
-  #   end
-  # end
+    if @social.save
+      render json: SocialSerializer.new(@social), status: :created
+    else
+      render json: { error: @social.errors.full_messages }, status: :unauthorized
+    end
+  end
 
   # PATCH/PUT /api/v1/socials/1
   def update

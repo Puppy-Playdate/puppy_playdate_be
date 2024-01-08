@@ -76,27 +76,24 @@ describe "Socials API", type: :request do
   describe "Social Create" do
     it "can create a new Social" do
       user = create(:user)
-      social_param = create(:social)
-      # social_param = ({
-      #                 name: 'Wine and Wags',
-      #                 description: 'Wine and Wags is a social event for dog owners to meet and mingle with other dog owners.',
-      #                 location: 'Denver, CO',
-      #                 event_date: '2021-08-07',
-      #                 event_type: 'chill'
-      #               })
-        user_social = UserSocial.create(user_id: user.id, social_id: social_param.id)
+      social_params = ({
+                      name: 'Wine and Wags',
+                      description: 'Wine and Wags is a social event for dog owners to meet and mingle with other dog owners.',
+                      location: 'Denver, CO',
+                      event_date: '2021-08-07',
+                      event_type: 'chill'
+                    })
       headers = {"CONTENT_TYPE" => "application/json"}
-    # require 'pry'; binding.pry
-      post "api/v1/user_socials", headers: headers, params: JSON.generate(social: social_param)
-      puts response.body
+    require 'pry'; binding.pry
+      post api_v1_user_socials_path(user.id, social_params), headers: headers, params: JSON.generate(social: social_params)
       created_social = Social.last
 
       expect(response).to be_successful
-      expect(created_social.name).to eq(social_param[:name])
-      expect(created_social.description).to eq(social_param[:description])
-      expect(created_social.location).to eq(social_param[:location])
-      expect(created_social.event_date).to eq(social_param[:event_date])
-      expect(created_social.event_type).to eq(social_param[:event_type])
+      expect(created_social.name).to eq(social_params[:name])
+      expect(created_social.description).to eq(social_params[:description])
+      expect(created_social.location).to eq(social_params[:location])
+      expect(created_social.event_date).to eq(social_params[:event_date])
+      expect(created_social.event_type).to eq(social_params[:event_type])
     end
 
     xit "sad path; will send an error if social is not created" do 
