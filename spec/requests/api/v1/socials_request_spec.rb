@@ -3,24 +3,17 @@ require 'rails_helper'
 describe "Socials API", type: :request do
   describe "Socials Index" do
     it "sends a list of socials" do
-      # user = create(:user)
-      # up_dog = create(:dog, user: user)
       socials_list = create_list(:social, 5)
-      # user_social = UserSocial.create!(user_id: user.id, social_id: socials_list.first.id)
-      # user_social = UserSocial.create!(user_id: user.id, social_id: socials_list.last.id)
-      
-      # This commented portion of test data I believe will be needed more for a Users socials index and a users socials show page. Only created socials since a social does not belong to a user but shares a relation via the join page   
 
       get api_v1_socials_path
-      
+
       expect(response).to be_successful
 
       socials = JSON.parse(response.body, symbolize_names: true)
       expect(socials[:data].count).to eq(5)
-      
+
       socials[:data].each do |social|
         expect(social).to be_a(Hash)
-        # require 'pry'; binding.pry
         expect(socials[:data]).to be_an(Array)
         
         expect(social).to have_key(:id)
@@ -31,17 +24,17 @@ describe "Socials API", type: :request do
         expect(social[:attributes]).to have_key(:name)
         expect(social[:attributes][:name]).to be_a(String)
 
-        expect(social[:attributes]).to have_key(:breed)
-        expect(social[:attributes][:breed]).to be_a(String)
+        expect(social[:attributes]).to have_key(:description)
+        expect(social[:attributes][:description]).to be_a(String)
 
-        expect(social[:attributes]).to have_key(:age)
-        expect(social[:attributes][:age]).to be_a(Integer)
+        expect(social[:attributes]).to have_key(:location)
+        expect(social[:attributes][:location]).to be_a(String)
 
-        expect(social[:attributes]).to have_key(:size)
-        expect(social[:attributes][:size]).to be_a(String)
+        expect(social[:attributes]).to have_key(:event_date)
+        expect(social[:attributes][:event_date]).to be_a(String)
 
-        expect(social[:attributes]).to have_key(:neutered)
-        expect(social[:attributes][:neutered]).to be_a(TrueClass).or be_a(FalseClass)
+        expect(social[:attributes]).to have_key(:event_type)
+        expect(social[:attributes][:event_type]).to be_a(String)
       end
     end
   end
@@ -50,20 +43,20 @@ describe "Socials API", type: :request do
     xit "can get one Social by its id" do
       user = create(:user)
       dog = create(:dog, user: user)
-      
+
       get api_v1_user_dog_path(user.id, dog.id)
 
       dog_request = JSON.parse(response.body, symbolize_names: true) 
 
       expect(response).to be_successful
       expect(dog_request).to be_a(Hash)
-      
+
       expect(dog_request[:data]).to have_key(:id)
       expect(dog_request[:data][:id]).to be_an(String)
   
       expect(dog_request[:data][:attributes]).to have_key(:name)
       expect(dog_request[:data][:attributes][:name]).to be_a(String)
-  
+
       expect(dog_request[:data][:attributes]).to have_key(:breed)
       expect(dog_request[:data][:attributes][:breed]).to be_a(String)
 
@@ -89,9 +82,9 @@ describe "Socials API", type: :request do
                       neutered: true
                     })
       headers = {"CONTENT_TYPE" => "application/json"}
-    
+
       post api_v1_user_dogs_path(user.id, dog_params), headers: headers, params: JSON.generate(dog: dog_params)
-      
+
       created_dog = Dog.last
 
       expect(response).to be_successful
@@ -112,7 +105,7 @@ describe "Socials API", type: :request do
         neutered: true
       })
       headers = {"CONTENT_TYPE" => "application/json"}
-  
+
       post api_v1_user_dogs_path(user.id, dog_params), headers: headers, params: JSON.generate(dog: dog_params)
 
       expect(response).to_not be_successful 
