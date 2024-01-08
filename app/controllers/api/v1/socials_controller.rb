@@ -14,14 +14,14 @@ class Api::V1::SocialsController < ApplicationController
     render json: SocialSerializer.new(@social)
   end
 
-  # POST /api/v1/socials
+  # POST /api/v1/users/:user_id/socials
   def create
-    @social = Social.new(social_params)
+    social = Social.new(social_params)
 
-    if @social.save
-      render json: SocialSerializer.new(@social)
+    if social.save
+      render json: SocialSerializer.new(social), status: :created 
     else
-      render json: { error: @social.errors.full_messages }, status: :unauthorized
+      render json: { error: social.errors.full_messages }, status: :unauthorized
     end
   end
 

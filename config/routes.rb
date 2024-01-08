@@ -5,6 +5,8 @@ Rails.application.routes.draw do
         resources :dogs
         resources :socials
       end
+      resources :socials
+      
       resources :user_socials
     end
   end
