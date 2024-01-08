@@ -31,17 +31,17 @@ describe "Socials API", type: :request do
         expect(social[:attributes]).to have_key(:name)
         expect(social[:attributes][:name]).to be_a(String)
 
-        expect(social[:attributes]).to have_key(:breed)
-        expect(social[:attributes][:breed]).to be_a(String)
+        expect(social[:attributes]).to have_key(:description)
+        expect(social[:attributes][:description]).to be_a(String)
 
-        expect(social[:attributes]).to have_key(:age)
-        expect(social[:attributes][:age]).to be_a(Integer)
+        expect(social[:attributes]).to have_key(:location)
+        expect(social[:attributes][:location]).to be_a(String)
 
-        expect(social[:attributes]).to have_key(:size)
-        expect(social[:attributes][:size]).to be_a(String)
+        expect(social[:attributes]).to have_key(:event_date)
+        expect(social[:attributes][:event_date]).to be_a(String)
 
-        expect(social[:attributes]).to have_key(:neutered)
-        expect(social[:attributes][:neutered]).to be_a(TrueClass).or be_a(FalseClass)
+        expect(social[:attributes]).to have_key(:event_type)
+        expect(social[:attributes][:event_type]).to be_a(String)
       end
     end
   end
@@ -50,6 +50,7 @@ describe "Socials API", type: :request do
     xit "can get one Social by its id" do
       user = create(:user)
       dog = create(:dog, user: user)
+      social = create(:social, user: user)
       
       get api_v1_user_dog_path(user.id, dog.id)
 
@@ -61,45 +62,45 @@ describe "Socials API", type: :request do
       expect(dog_request[:data]).to have_key(:id)
       expect(dog_request[:data][:id]).to be_an(String)
   
-      expect(dog_request[:data][:attributes]).to have_key(:name)
-      expect(dog_request[:data][:attributes][:name]).to be_a(String)
-  
-      expect(dog_request[:data][:attributes]).to have_key(:breed)
-      expect(dog_request[:data][:attributes][:breed]).to be_a(String)
+      expect(social[:attributes]).to have_key(:name)
+        expect(social[:attributes][:name]).to be_a(String)
 
-      expect(dog_request[:data][:attributes]).to have_key(:age)
-      expect(dog_request[:data][:attributes][:age]).to be_a(Integer)
+        expect(social[:attributes]).to have_key(:description)
+        expect(social[:attributes][:description]).to be_a(String)
 
-      expect(dog_request[:data][:attributes]).to have_key(:size)
-      expect(dog_request[:data][:attributes][:size]).to be_a(String)
+        expect(social[:attributes]).to have_key(:location)
+        expect(social[:attributes][:location]).to be_a(String)
 
-      expect(dog_request[:data][:attributes]).to have_key(:neutered)
-      expect(dog_request[:data][:attributes][:neutered]).to be_a(TrueClass).or be_a(FalseClass)
+        expect(social[:attributes]).to have_key(:event_date)
+        expect(social[:attributes][:event_date]).to be_a(String)
+
+        expect(social[:attributes]).to have_key(:event_type)
+        expect(social[:attributes][:event_type]).to be_a(String)
     end
   end
 
   describe "Social Create" do
-    xit "can create a new Social" do
+    it "can create a new Social" do
       user = create(:user)
-      dog_params = ({
-                      name: 'James Sullivan',
-                      breed: 'Pitbull',
-                      age: 3,
-                      size: "medium",
-                      neutered: true
+      social_param = ({
+                      name: 'Wine and Wags',
+                      description: 'Wine and Wags is a social event for dog owners to meet and mingle with other dog owners.',
+                      location: 'Denver, CO',
+                      event_date: '2021-08-07',
+                      event_type: 'chill'
                     })
       headers = {"CONTENT_TYPE" => "application/json"}
-    
-      post api_v1_user_dogs_path(user.id, dog_params), headers: headers, params: JSON.generate(dog: dog_params)
-      
-      created_dog = Dog.last
+    require 'pry'; binding.pry
+      post api_v1_user_socials_path(user.id), headers: headers, params: JSON.generate(social: social_param)
+
+      created_social = Social.last
 
       expect(response).to be_successful
-      expect(created_dog.name).to eq(dog_params[:name])
-      expect(created_dog.breed).to eq(dog_params[:breed])
-      expect(created_dog.age).to eq(dog_params[:age])
-      expect(created_dog.size).to eq(dog_params[:size])
-      expect(created_dog.neutered).to be(true).or be(false)
+      expect(created_social.name).to eq(social_param[:name])
+      expect(created_social.description).to eq(social_param[:description])
+      expect(created_social.location).to eq(social_param[:location])
+      expect(created_social.event_date).to eq(social_param[:event_date])
+      expect(created_social.event_type).to eq(social_param[:event_type])
     end
 
     xit "sad path; will send an error if social is not created" do 

@@ -51,6 +51,6 @@ class Api::V1::SocialsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def social_params
-      params.permit(:name, :description, :event_type, :event_date)
+      params.permit(:name, :description, :event_type, :event_date, :location)
     end
 end
