@@ -6,7 +6,7 @@ describe "Socials API", type: :request do
       user = create(:user)
       socials_list = create_list(:social, 5, user: user)
 
-      get api_v1_socials_path
+      get api_v1_user_socials_path(user)
 
       expect(response).to be_successful
 
