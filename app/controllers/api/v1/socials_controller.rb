@@ -15,15 +15,16 @@ class Api::V1::SocialsController < ApplicationController
   end
 
   # POST /api/v1/socials
-  def create
-    @social = Social.new(social_params)
+  # def create
+  #   require 'pry'; binding.pry
+  #   @social = Social.new(social_params)
 
-    if @social.save
-      render json: SocialSerializer.new(@social)
-    else
-      render json: { error: @social.errors.full_messages }, status: :unauthorized
-    end
-  end
+  #   if @social.save
+  #     render json: SocialSerializer.new(@social)
+  #   else
+  #     render json: { error: @social.errors.full_messages }, status: :unauthorized
+  #   end
+  # end
 
   # PATCH/PUT /api/v1/socials/1
   def update

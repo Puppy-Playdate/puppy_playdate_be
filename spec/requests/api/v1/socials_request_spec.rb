@@ -3,16 +3,10 @@ require 'rails_helper'
 describe "Socials API", type: :request do
   describe "Socials Index" do
     it "sends a list of socials" do
-      # user = create(:user)
-      # up_dog = create(:dog, user: user)
+      user = create(:user)
       socials_list = create_list(:social, 5)
-      # user_social = UserSocial.create!(user_id: user.id, social_id: socials_list.first.id)
-      # user_social = UserSocial.create!(user_id: user.id, social_id: socials_list.last.id)
-      
-      # This commented portion of test data I believe will be needed more for a Users socials index and a users socials show page. Only created socials since a social does not belong to a user but shares a relation via the join page   
 
-      get api_v1_socials_path
-      
+      get api_v1_user_socials_path(user.id, socials_list)
       expect(response).to be_successful
 
       socials = JSON.parse(response.body, symbolize_names: true)
@@ -82,17 +76,19 @@ describe "Socials API", type: :request do
   describe "Social Create" do
     it "can create a new Social" do
       user = create(:user)
-      social_param = ({
-                      name: 'Wine and Wags',
-                      description: 'Wine and Wags is a social event for dog owners to meet and mingle with other dog owners.',
-                      location: 'Denver, CO',
-                      event_date: '2021-08-07',
-                      event_type: 'chill'
-                    })
+      social_param = create(:social)
+      # social_param = ({
+      #                 name: 'Wine and Wags',
+      #                 description: 'Wine and Wags is a social event for dog owners to meet and mingle with other dog owners.',
+      #                 location: 'Denver, CO',
+      #                 event_date: '2021-08-07',
+      #                 event_type: 'chill'
+      #               })
+        user_social = UserSocial.create(user_id: user.id, social_id: social_param.id)
       headers = {"CONTENT_TYPE" => "application/json"}
-    require 'pry'; binding.pry
-      post api_v1_user_socials_path(user.id), headers: headers, params: JSON.generate(social: social_param)
-
+    # require 'pry'; binding.pry
+      post "api/v1/user_socials", headers: headers, params: JSON.generate(social: social_param)
+      puts response.body
       created_social = Social.last
 
       expect(response).to be_successful
