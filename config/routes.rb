@@ -3,11 +3,9 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users do
         resources :dogs
-        resources :socials
       end
-      resources :socials
-      
-      resources :user_socials
+      resources :socials, only: [:index, :show, :update]
+      resources :user_socials, only: [:create, :destroy]
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
