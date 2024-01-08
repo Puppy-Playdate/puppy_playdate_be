@@ -64,39 +64,59 @@ In both terminals:
 
 All tests should be passing.
 
-
-## Contributors
-
-* Tommy Takahashi 
-    * [LinkedIn:](https://www.linkedin.com/in/tommy-takahashi/)
-    * [Github:](https://github.com/ttakahashi1591)
-
-* Miranda Delaney 
-    * [LinkedIn:](https://www.linkedin.com/in/mld52/)
-    * [Github:](https://github.com/delaneymiranda1)
-
-* Eric Belongea 
-    * [LinkedIn:](https://www.linkedin.com/in/eric-belongea/)
-    * [Github:](https://github.com/EricBelongea)
-
-* Blake Sergesketter
-    * [LinkedIn:](https://www.linkedin.com/in/b-sergesketter/)
-    * [Github:](https://github.com/bserge13)
-
-* Justin Lee
-    * [LinkedIn:](https://www.linkedin.com/in/justin-lee-438035294/)
-    * [Github:](https://github.com/JustinSteel)
-
-
-## Acknowledgments
-May use this area for any hat tip to anyone whose code is used, inspiration, helpers (instructors), etc.
-
-
 ## API's Consumed
 
 ## API Endpoints
 
-#### Puppy Playdate Endpoints: 
+***Utilize `"http://localhost:3000/"` to access ALL endpoints.*** 
+
+#### Puppy Playdate Endpoints:
+
+**User CRUD**
+
+- **Users Index**
+    
+    - GET `api/v1/users`
+
+- **User Show**
+    
+    - GET `api/v1/users/:id`
+
+- **User Create**
+    
+    - POST `api/v1/users`
+
+- **User Update**
+    
+    - PATCH `api/v1/users/:id`
+    - PUT `api/v1/users/:id`
+
+- **User Destroy**
+    
+    - DELETE `api/v1/users/:id`
+
+**Dogs CRUD**
+
+- **Dogs Index**
+    
+    - GET `api/v1/users/:user_id/dogs`
+
+- **Dog Show**
+    
+    - GET `api/v1/users/:user_id/dogs/:id`
+
+- **Dog Create**
+    
+    - POST `/api/v1/users/:user_id/dogs`
+
+- **Dog Update**
+    
+    - PATCH `api/v1/users/:user_id/dogs/:id`
+    - PUT `api/v1/users/:user_id/dogs/:id`
+
+- **Dog Destroy**
+    
+    - DELETE `api/v1/users/:user_id/dogs/:id`
 
 ## Gems 
 
@@ -124,5 +144,31 @@ May use this area for any hat tip to anyone whose code is used, inspiration, hel
 
 - [Pry](https://github.com/pry/pry)
     - `gem "pry"`
+
+## Contributors
+
+* Tommy Takahashi 
+    * [Tommy's LinkedIn](https://www.linkedin.com/in/tommy-takahashi/)
+    * [Tommy's Github](https://github.com/ttakahashi1591)
+
+* Miranda Delaney 
+    * [Miranda's LinkedIn](https://www.linkedin.com/in/mld52/)
+    * [Miranda's Github](https://github.com/delaneymiranda1)
+
+* Eric Belongea 
+    * [Eric's LinkedIn](https://www.linkedin.com/in/eric-belongea/)
+    * [Eric's Github](https://github.com/EricBelongea)
+
+* Blake Sergesketter
+    * [Blake's LinkedIn](https://www.linkedin.com/in/b-sergesketter/)
+    * [Blake's Github](https://github.com/bserge13)
+
+* Justin Lee
+    * [Justin's LinkedIn](https://www.linkedin.com/in/justin-lee-438035294/)
+    * [Justin's Github](https://github.com/JustinSteel)
+
+
+## Acknowledgments
+May use this area for any hat tip to anyone whose code is used, inspiration, helpers (instructors), etc.
 
 ## PLACEHOLDER FOR PICTURES SHOWING EXAMPLES OR PARTS OF THE PROJECT WE'RE PROUD OF.
