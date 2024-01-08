@@ -15,7 +15,7 @@ class Api::V1::UsersController < ApplicationController
     if user.authenticate(params[:pass])
       render json: UserSerializer.new(user)
     else
-      render json: { error: user.errors.full_messages }, status: :unauthorized
+      render json: { error: "Sorry, your credentials are bad", status: 401 }, status: :unauthorized
     end
   end
 
