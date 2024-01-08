@@ -5,7 +5,7 @@ Rails.application.routes.draw do
         resources :dogs
         resources :socials
       end
-      resources :user_socials
+      # resources :user_socials
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
