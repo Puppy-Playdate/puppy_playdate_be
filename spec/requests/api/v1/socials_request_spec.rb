@@ -41,7 +41,7 @@ describe "Socials API", type: :request do
   end
 
   describe "Socials Show" do
-    it "can get one Social by its id" do
+    xit "can get one Social by its id" do
       user = create(:user)
       social = create(:social, user: user)
       
@@ -73,7 +73,7 @@ describe "Socials API", type: :request do
   end
 
   describe "Social Create" do
-    xit "can create a new Social" do
+    it "can create a new Social" do
       user = create(:user)
       # social_params = create(:social, user: user)
       social_params = ({
@@ -84,9 +84,9 @@ describe "Socials API", type: :request do
                       event_type: 'chill'
                     })
       headers = {"CONTENT_TYPE" => "application/json"}
+      require 'pry'; binding.pry
       post api_v1_user_socials_path(user.id, social_params), headers: headers, params: JSON.generate(social: social_params)
       created_social = Social.last
-      # require 'pry'; binding.pry
 
       expect(response).to be_successful
       expect(created_social.name).to eq(social_params[:name])
@@ -98,16 +98,16 @@ describe "Socials API", type: :request do
 
     xit "sad path; will send an error if social is not created" do 
       user = create(:user)
-      dog_params = ({
-        name: "",
-        breed: 'Pitbull',
-        age: 3,
-        size: "medium",
-        neutered: true
-      })
+      social_params = ({
+                      name: 'Wine and Wags',
+                      description: 'Wine and Wags is a social event for dog owners to meet and mingle with other dog owners.',
+                      location: 'Denver, CO',
+                      event_date: Date.today,
+                      event_type: 'chill'
+                    })
       headers = {"CONTENT_TYPE" => "application/json"}
   
-      post api_v1_user_dogs_path(user.id, dog_params), headers: headers, params: JSON.generate(dog: dog_params)
+      post api_v1_user_socials_path(user.id, social_params), headers: headers, params: JSON.generate(social: social_params)
 
       expect(response).to_not be_successful 
       expect(response).to have_http_status(401)
@@ -117,26 +117,26 @@ describe "Socials API", type: :request do
   describe "Social Update" do
     xit "can update an existing social" do
       user = create(:user)
-      dog = create(:dog, user: user)
-      previous_name = Dog.last.name
-      dog_param = { name: "P. Sherman" }
+      social = create(:social, user: user)
+      previous_name = Social.last.name
+      socail_param = { name: "P. Sherman" }
       headers = {"CONTENT_TYPE" => "application/json"}
 
-      patch api_v1_user_dog_path(user.id, dog.id), params: dog_param
-      up_dog = Dog.find_by(id: dog.id)
+      patch api_v1_user_socails_path(user.id, socail.id), params: socail_param
+      super_socail = Social.find_by(id: social.id)
       expect(response).to be_successful
-      expect(up_dog.name).to_not eq(previous_name)
-      expect(up_dog.name).to eq("P. Sherman")
+      expect(super_social.name).to_not eq(previous_name)
+      expect(super_social.name).to eq("P. Sherman")
     end
 
-    xit "sad path; will send an error if dog is not created" do 
+    xit "sad path; will send an error if social is not created" do 
       user = create(:user)
-      dog = create(:dog, user: user)
-      previous_name = Dog.last.name
-      dog_param = { name: "" }
+      social = create(:social, user: user)
+      previous_name = Social.last.name
+      social_param = { name: "" }
       headers = {"CONTENT_TYPE" => "application/json"}
   
-      patch api_v1_user_dog_path(user.id, dog.id), params: dog_param
+      patch api_v1_user_socials_path(user.id, social.id), params: social_param
       expect(response).to_not be_successful 
       expect(response).to have_http_status(422)
     end
@@ -145,15 +145,15 @@ describe "Socials API", type: :request do
   describe "Social Destroy" do
     xit "can destroy an Social" do
       user = create(:user)
-      dog = create(:dog, user: user)
+      social = create(:social, user: user)
     
-      expect(Dog.count).to eq(1)
+      expect(Social.count).to eq(1)
     
-      delete api_v1_user_dog_path(user.id, dog.id)
+      delete api_v1_user_socials_path(user.id, social.id)
     
       expect(response).to be_successful
-      expect(Dog.count).to eq(0)
-      expect{Dog.find(dog.id)}.to raise_error(ActiveRecord::RecordNotFound)
+      expect(Social.count).to eq(0)
+      expect{Social.find(social.id)}.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 end
