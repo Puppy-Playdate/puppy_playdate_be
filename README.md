@@ -215,7 +215,7 @@ May use this area for any hat tip to anyone whose code is used, inspiration, hel
  
 
 **TODO**
-[ ] serializer test for socials 
-[ ] Create, Update, and Delete are all not being called on in the socials controller inside the method so need to do some digging. Seem to be the same issue though
+- [ ] serializer test for socials 
+- [x] Create, Update, and Delete are all not being called on in the socials controller inside the method so need to do some digging. Seem to be the same issue though
 
 
