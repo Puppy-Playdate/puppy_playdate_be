@@ -118,6 +118,33 @@ All tests should be passing.
     
     - DELETE `api/v1/users/:user_id/dogs/:id`
 
+**Socials CRUD**
+
+- **Socials Index**
+    
+    - GET `api/v1/users/:user_id/socials`
+
+- **Socials Show**
+    
+    - GET `/api/v1/users/:user_id/socials/:id`
+
+    ## **UNDER CONSTRUCTION**
+
+- **Socials Create**
+    
+    - POST `/api/v1/users/:user_id/socials`
+
+- **Socials Update**
+    
+    - PATCH `/api/v1/users/:user_id/socials/:id`
+    - PUT `/api/v1/users/:user_id/socials/:id`
+
+- **Socials Destroy**
+    
+    - DELETE `/api/v1/users/:user_id/socials/:id`
+
+    ## **END CONSTRUCTION**
+
 ## Gems 
 
 - [Faraday](https://lostisland.github.io/faraday/#/)
@@ -172,3 +199,25 @@ All tests should be passing.
 May use this area for any hat tip to anyone whose code is used, inspiration, helpers (instructors), etc.
 
 ## PLACEHOLDER FOR PICTURES SHOWING EXAMPLES OR PARTS OF THE PROJECT WE'RE PROUD OF.
+
+
+
+
+## IMPORTANT INFO FOR DEVS
+
+**Info**
+- users have many dogs and socials
+- dogs and socials belong to users
+- We have a user_socials controller so if we get rid of the joins table take it out too
+- users and dogs basic crud functions happy and sad path tested.
+- if not merged into main yet follow these steps
+1. git checkout -b socials
+2. git pull origin socials
+    - this will give you access to all the current pushes we made to the socials branch blake can show you if you have any questions.
+ 
+
+**TODO**
+- serializer test for socials 
+- Create, Update, and Delete are all not being called on in the socials controller inside the method so need to do some digging. Seem to be the same issue though
+
+
