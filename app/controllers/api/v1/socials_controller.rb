@@ -16,7 +16,7 @@ class Api::V1::SocialsController < ApplicationController
 
   # POST /api/v1/user_id/socials
   def create
-    require 'pry'; binding.pry
+    # require 'pry'; binding.pry
     @social = @user.socials.new(social_params)
 
     if @social.save
@@ -39,17 +39,18 @@ class Api::V1::SocialsController < ApplicationController
 
   # DELETE /api/v1/socials/1
   def destroy
+    require 'pry'; binding.pry
     @social.destroy!
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_social
+      require 'pry'; binding.pry
       @social = Social.find(params[:id])
     end
 
     def set_user
-      # require 'pry'; binding.pry
       @user = User.find(params[:user_id])
     end
 

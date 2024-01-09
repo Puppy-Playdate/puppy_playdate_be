@@ -73,7 +73,7 @@ describe "Socials API", type: :request do
   end
 
   describe "Social Create" do
-    xit "can create a new Social" do
+    it "can create a new Social" do
       user = User.create!(name: "James Sullivan", email: "sully@gmail.com", password: "password")
       # social_params = create(:social, user: user)
       social_params = ({
@@ -83,9 +83,9 @@ describe "Socials API", type: :request do
                       event_date: Date.today,
                       event_type: 'chill'
                     })
-      headers = {"CONTENT_TYPE" => "application/json"}
-      require 'pry'; binding.pry
-      post api_v1_user_socials_path(user.id), headers: headers, params: JSON.generate(social: social_params)
+      # headers = {"CONTENT_TYPE" => "application/json"}
+      # require 'pry'; binding.pry
+      post api_v1_user_socials_path(user.id), params: social_params
       created_social = Social.last
 
       expect(response).to be_successful
@@ -105,9 +105,9 @@ describe "Socials API", type: :request do
                       event_date: Date.today,
                       event_type: 'chill'
                     })
-      headers = {"CONTENT_TYPE" => "application/json"}
+      # headers = {"CONTENT_TYPE" => "application/json"}
   
-      post api_v1_user_socials_path(user.id, social_params), headers: headers, params: JSON.generate(social: social_params)
+      post api_v1_user_socials_path(user.id, social_params), params: social_params
 
       expect(response).to_not be_successful 
       expect(response).to have_http_status(401)
@@ -153,7 +153,7 @@ describe "Socials API", type: :request do
     
       expect(Social.count).to eq(1)
     
-      delete api_v1_user_socials_path(user.id, social.id)
+      delete api_v1_user_socials_path(user.id, social.id) 
     
       expect(response).to be_successful
       expect(Social.count).to eq(0)
