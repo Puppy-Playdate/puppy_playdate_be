@@ -211,7 +211,7 @@ May use this area for any hat tip to anyone whose code is used, inspiration, hel
 - We have a user_socials controller so if we get rid of the joins table take it out too
 - users and dogs basic crud functions happy and sad path tested.
 - if not merged into main yet follow these steps
-1. git checkout -b socials
+1. git checkout socials
 2. git pull origin socials
     - this will give you access to all the current pushes we made to the socials branch blake can show you if you have any questions.
  
