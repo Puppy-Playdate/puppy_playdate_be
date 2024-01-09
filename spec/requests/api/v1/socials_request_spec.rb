@@ -120,10 +120,14 @@ describe "Socials API", type: :request do
       social = create(:social, user: user)
       previous_name = Social.last.name
       social_param = { name: "P. Sherman" }
-      headers = {"CONTENT_TYPE" => "application/json"}
-
-      patch api_v1_user_socials_path(user.id, social.id), params: social_param
+      # headers = {"CONTENT_TYPE" => "application/json"}
+      # require 'pry'; binding.pry
+      # patch api_v1_user_social_path(user.id, social.id), params: social_param
+      patch "/api/v1/users/#{user.id}/socials/#{social.id}", params: social_param
       super_social = Social.find_by(id: social.id)
+
+      # require 'pry'; binding.pry
+
       expect(response).to be_successful
       expect(super_social.name).to_not eq(previous_name)
       expect(super_social.name).to eq("P. Sherman")

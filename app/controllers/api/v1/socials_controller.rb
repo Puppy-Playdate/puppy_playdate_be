@@ -28,6 +28,7 @@ class Api::V1::SocialsController < ApplicationController
 
   # PATCH/PUT /api/v1/socials/1
   def update
+    # require 'pry'; binding.pry
     @user_social = @user.socials.find(params[:id])
     if @user_social.update(social_params)
       render json: SocialSerializer.new(@user_social)
@@ -48,7 +49,8 @@ class Api::V1::SocialsController < ApplicationController
     end
 
     def set_user
-      @user = User.find(params[:id])
+      # require 'pry'; binding.pry
+      @user = User.find(params[:user_id])
     end
 
     # Only allow a list of trusted parameters through.
