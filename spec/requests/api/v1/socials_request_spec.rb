@@ -15,6 +15,7 @@ describe "Socials API", type: :request do
 
       socials[:data].each do |social|
         expect(social).to be_a(Hash)
+
         expect(socials[:data]).to be_an(Array)
         
         expect(social).to have_key(:id)
@@ -51,10 +52,10 @@ describe "Socials API", type: :request do
 
       expect(response).to be_successful
       expect(social_request).to be_a(Hash)
-      # require 'pry'; binding.pry
+
       expect(social_request[:data]).to have_key(:id)
       expect(social_request[:data][:id]).to be_an(String)
-      # require 'pry'; binding.pry
+
       expect(social_request[:data][:attributes]).to have_key(:name)
         expect(social_request[:data][:attributes][:name]).to be_a(String)
 
@@ -73,9 +74,9 @@ describe "Socials API", type: :request do
   end
 
   describe "Social Create" do
-    xit "can create a new Social" do
+    it "can create a new Social" do
       user = User.create!(name: "James Sullivan", email: "sully@gmail.com", password: "password")
-      # social_params = create(:social, user: user)
+
       social_params = ({
                       name: 'Wine and Wags',
                       description: 'Wine and Wags is a social event for dog owners to meet and mingle with other dog owners.',
@@ -83,9 +84,8 @@ describe "Socials API", type: :request do
                       event_date: Date.today,
                       event_type: 'chill'
                     })
-      headers = {"CONTENT_TYPE" => "application/json"}
-      require 'pry'; binding.pry
-      post api_v1_user_socials_path(user.id), headers: headers, params: JSON.generate(social: social_params)
+
+      post api_v1_user_socials_path(user.id), params: social_params
       created_social = Social.last
 
       expect(response).to be_successful
@@ -96,18 +96,17 @@ describe "Socials API", type: :request do
       expect(created_social.event_type).to eq(social_params[:event_type])
     end
 
-    xit "sad path; will send an error if social is not created" do 
+    it "sad path; will send an error if social is not created" do 
       user = create(:user)
       social_params = ({
-                      name: 'Wine and Wags',
+                      name: '',
                       description: 'Wine and Wags is a social event for dog owners to meet and mingle with other dog owners.',
                       location: 'Denver, CO',
                       event_date: Date.today,
                       event_type: 'chill'
                     })
-      headers = {"CONTENT_TYPE" => "application/json"}
-  
-      post api_v1_user_socials_path(user.id, social_params), headers: headers, params: JSON.generate(social: social_params)
+
+      post api_v1_user_socials_path(user.id), params: social_params
 
       expect(response).to_not be_successful 
       expect(response).to have_http_status(401)
@@ -120,36 +119,36 @@ describe "Socials API", type: :request do
       social = create(:social, user: user)
       previous_name = Social.last.name
       social_param = { name: "P. Sherman" }
-      headers = {"CONTENT_TYPE" => "application/json"}
 
-      patch api_v1_user_socials_path(user.id, social.id), params: social_param
+      patch api_v1_user_social_path(user.id, social.id), params: social_param
       super_social = Social.find_by(id: social.id)
+
       expect(response).to be_successful
       expect(super_social.name).to_not eq(previous_name)
       expect(super_social.name).to eq("P. Sherman")
     end
 
-    xit "sad path; will send an error if social is not created" do 
+    it "sad path; will send an error if social is not created" do 
       user = create(:user)
       social = create(:social, user: user)
       previous_name = Social.last.name
       social_param = { name: "" }
       headers = {"CONTENT_TYPE" => "application/json"}
   
-      patch api_v1_user_socials_path(user.id, social.id), params: social_param
+      patch api_v1_user_social_path(user.id, social.id), params: social_param
       expect(response).to_not be_successful 
       expect(response).to have_http_status(422)
     end
   end
 
   describe "Social Destroy" do
-    xit "can destroy an Social" do
+    it "can destroy an Social" do
       user = create(:user)
       social = create(:social, user: user)
     
       expect(Social.count).to eq(1)
     
-      delete api_v1_user_socials_path(user.id, social.id)
+      delete api_v1_user_social_path(user.id, social.id) 
     
       expect(response).to be_successful
       expect(Social.count).to eq(0)

@@ -8,7 +8,10 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-  user = User.create!(name: "James Sullivan", email: "sully@gmail.com", password: "password")
-  User.create!(name: "Mike Wazowski", email: "mike@gmail.com", password: "password")
-  User.create!(name: "Randall Boggs", email: "randy@gmail.com", password: "password")
-  User.create!(name: "Boo", email: "boo@gmail.com", password: "password")
+  user1 = User.create!(name: "James Sullivan", email: "sully@gmail.com", password: "password")
+  user2 = User.create!(name: "Mike Wazowski", email: "mike@gmail.com", password: "password")
+  user3 = User.create!(name: "Randall Boggs", email: "randy@gmail.com", password: "password")
+  user4 = User.create!(name: "Boo", email: "boo@gmail.com", password: "password")
+
+  dog1 = user1.dogs.create!(name: "Fido", breed: "Lab", age: 5, size: 1, neutered: true)
+  dog2 = user1.dogs.create!(name: "Bob", breed: "Pug", age: 3, size: 0, neutered: false)

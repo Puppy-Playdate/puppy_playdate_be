@@ -16,7 +16,6 @@ class Api::V1::SocialsController < ApplicationController
 
   # POST /api/v1/user_id/socials
   def create
-    require 'pry'; binding.pry
     @social = @user.socials.new(social_params)
 
     if @social.save
@@ -48,7 +47,7 @@ class Api::V1::SocialsController < ApplicationController
     end
 
     def set_user
-      @user = User.find(params[:id])
+      @user = User.find(params[:user_id])
     end
 
     # Only allow a list of trusted parameters through.
