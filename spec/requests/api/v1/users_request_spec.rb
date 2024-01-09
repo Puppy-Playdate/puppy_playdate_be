@@ -129,4 +129,41 @@ describe "Users API", type: :request do
       expect{User.find(user.id)}.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
+
+  describe 'User Login' do
+    it 'Can login a user' do
+      user = User.create!(name: "James Sullivan", email: "sully@gmail.com", password: "password")
+
+      get api_v1_find_by_email_path, params: { email: user.email, pass: user.password }
+      response_body = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to be_successful
+      expect(response.status).to eq(200)
+      expect(response_body[:data][:attributes][:name]).to eq("James Sullivan")
+    end
+
+    describe '#sad-path' do
+      it 'wrong email' do
+        user = User.create!(name: "James Sullivan", email: "sully@gmail.com", password: "password")
+
+        get api_v1_find_by_email_path, params: { email: user.email, pass:"wrong" }
+        response_body = JSON.parse(response.body, symbolize_names: true)
+
+        expect(response).to_not be_successful
+        expect(response.status).to eq(401)
+        expect(response_body[:error]).to eq("Sorry, your credentials are bad")
+      end
+
+      it "no email associated with account" do
+        user = User.create!(name: "James Sullivan", email: "sully@gmail.com", password: "password")
+
+        get api_v1_find_by_email_path, params: { email: "notreal@themoon.com", pass:"MoonM@n!" }
+        response_body = JSON.parse(response.body, symbolize_names: true)
+
+        expect(response).to_not be_successful
+        expect(response.status).to eq(404)
+        expect(response_body[:error]).to eq("This email is not associated with an account")
+      end
+    end
+  end
 end
