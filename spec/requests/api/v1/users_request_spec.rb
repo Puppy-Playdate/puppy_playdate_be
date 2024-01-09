@@ -11,7 +11,7 @@ describe "Users API", type: :request do
 
       users = JSON.parse(response.body, symbolize_names: true)
       expect(users[:data].count).to eq(5)
-      # require 'pry'; binding.pry
+
       users[:data].each do |user|
         expect(users).to be_a(Hash)
         expect(users[:data]).to be_an(Array)

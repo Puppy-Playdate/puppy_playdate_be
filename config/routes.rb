@@ -4,7 +4,9 @@ Rails.application.routes.draw do
       get "/find_by_email", to: 'users#user_by_email'
       resources :users do
         resources :dogs
+        resources :socials
       end
+      # resources :user_socials
     end
   end
   
