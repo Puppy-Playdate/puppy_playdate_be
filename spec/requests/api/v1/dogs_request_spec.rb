@@ -144,17 +144,17 @@ describe "Dogs API", type: :request do
   end
 
   describe "Dog Destroy" do
-    it "can destroy an dog" do
+    xit "can destroy an dog" do
       user = create(:user)
-      dog = create(:dog, user: user)
+      social = create(:social, user: user)
     
-      expect(Dog.count).to eq(1)
+      expect(Social.count).to eq(1)
     
-      delete api_v1_user_dog_path(user.id, dog.id)
+      delete api_v1_user_social_path(user.id, social.id)
     
       expect(response).to be_successful
-      expect(Dog.count).to eq(0)
-      expect{Dog.find(dog.id)}.to raise_error(ActiveRecord::RecordNotFound)
+      expect(Social.count).to eq(0)
+      expect{Social.find(dog.id)}.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 end

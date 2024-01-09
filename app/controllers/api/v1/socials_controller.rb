@@ -28,8 +28,9 @@ class Api::V1::SocialsController < ApplicationController
 
   # PATCH/PUT /api/v1/socials/1
   def update
-    if @social.update(social_params)
-      render json: SocialSerializer.new(@social)
+    @user_social = @user.socials.find(params[:id])
+    if @user_social.update(social_params)
+      render json: SocialSerializer.new(@user_social)
     else
       render json: { error: @social.errors.full_messages }, status: :unprocessable_entity
     end

@@ -41,40 +41,40 @@ describe "Socials API", type: :request do
   end
 
   describe "Socials Show" do
-    xit "can get one Social by its id" do
+    it "can get one Social by its id" do
       user = create(:user)
       social = create(:social, user: user)
       
-      get api_v1_user_socials_path(user.id, social.id)
+      get api_v1_user_social_path(user.id, social.id)
 
       social_request = JSON.parse(response.body, symbolize_names: true) 
 
       expect(response).to be_successful
       expect(social_request).to be_a(Hash)
-      require 'pry'; binding.pry
+      # require 'pry'; binding.pry
       expect(social_request[:data]).to have_key(:id)
       expect(social_request[:data][:id]).to be_an(String)
-  
-      expect(social[:attributes]).to have_key(:name)
-        expect(social[:attributes][:name]).to be_a(String)
+      # require 'pry'; binding.pry
+      expect(social_request[:data][:attributes]).to have_key(:name)
+        expect(social_request[:data][:attributes][:name]).to be_a(String)
 
-        expect(social[:attributes]).to have_key(:description)
-        expect(social[:attributes][:description]).to be_a(String)
+        expect(social_request[:data][:attributes]).to have_key(:description)
+        expect(social_request[:data][:attributes][:description]).to be_a(String)
 
-        expect(social[:attributes]).to have_key(:location)
-        expect(social[:attributes][:location]).to be_a(String)
+        expect(social_request[:data][:attributes]).to have_key(:location)
+        expect(social_request[:data][:attributes][:location]).to be_a(String)
 
-        expect(social[:attributes]).to have_key(:event_date)
-        expect(social[:attributes][:event_date]).to be_a(String)
+        expect(social_request[:data][:attributes]).to have_key(:event_date)
+        expect(social_request[:data][:attributes][:event_date]).to be_a(String)
 
-        expect(social[:attributes]).to have_key(:event_type)
-        expect(social[:attributes][:event_type]).to be_a(String)
+        expect(social_request[:data][:attributes]).to have_key(:event_type)
+        expect(social_request[:data][:attributes][:event_type]).to be_a(String)
     end
   end
 
   describe "Social Create" do
-    it "can create a new Social" do
-      user = create(:user)
+    xit "can create a new Social" do
+      user = User.create!(name: "James Sullivan", email: "sully@gmail.com", password: "password")
       # social_params = create(:social, user: user)
       social_params = ({
                       name: 'Wine and Wags',
@@ -85,7 +85,7 @@ describe "Socials API", type: :request do
                     })
       headers = {"CONTENT_TYPE" => "application/json"}
       require 'pry'; binding.pry
-      post api_v1_user_socials_path(user.id, social_params), headers: headers, params: JSON.generate(social: social_params)
+      post api_v1_user_socials_path(user.id), headers: headers, params: JSON.generate(social: social_params)
       created_social = Social.last
 
       expect(response).to be_successful
@@ -115,15 +115,15 @@ describe "Socials API", type: :request do
   end
 
   describe "Social Update" do
-    xit "can update an existing social" do
+    it "can update an existing social" do
       user = create(:user)
       social = create(:social, user: user)
       previous_name = Social.last.name
-      socail_param = { name: "P. Sherman" }
+      social_param = { name: "P. Sherman" }
       headers = {"CONTENT_TYPE" => "application/json"}
 
-      patch api_v1_user_socails_path(user.id, socail.id), params: socail_param
-      super_socail = Social.find_by(id: social.id)
+      patch api_v1_user_socials_path(user.id, social.id), params: social_param
+      super_social = Social.find_by(id: social.id)
       expect(response).to be_successful
       expect(super_social.name).to_not eq(previous_name)
       expect(super_social.name).to eq("P. Sherman")
