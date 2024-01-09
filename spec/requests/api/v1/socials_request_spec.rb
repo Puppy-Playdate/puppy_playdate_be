@@ -147,13 +147,13 @@ describe "Socials API", type: :request do
   end
 
   describe "Social Destroy" do
-    xit "can destroy an Social" do
+    it "can destroy an Social" do
       user = create(:user)
       social = create(:social, user: user)
     
       expect(Social.count).to eq(1)
     
-      delete api_v1_user_socials_path(user.id, social.id) 
+      delete api_v1_user_social_path(user.id, social.id) 
     
       expect(response).to be_successful
       expect(Social.count).to eq(0)

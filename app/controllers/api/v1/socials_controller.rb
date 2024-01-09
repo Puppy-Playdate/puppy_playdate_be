@@ -46,7 +46,7 @@ class Api::V1::SocialsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_social
-      require 'pry'; binding.pry
+      # require 'pry'; binding.pry
       @social = Social.find(params[:id])
     end
 
