@@ -87,7 +87,7 @@ describe "Socials API", type: :request do
 
       post api_v1_user_socials_path(user.id), params: social_params
       created_social = Social.last
-
+      require 'pry'; binding.pry
       expect(response).to be_successful
       expect(created_social.name).to eq(social_params[:name])
       expect(created_social.description).to eq(social_params[:description])

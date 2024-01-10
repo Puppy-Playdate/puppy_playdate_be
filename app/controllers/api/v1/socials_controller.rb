@@ -21,7 +21,7 @@ class Api::V1::SocialsController < ApplicationController
     if @social.save
       render json: SocialSerializer.new(@social), status: :created
     else
-      render json: { error: @social.errors.full_messages }, status: :unauthorized
+      render json: { status: 401, error: @social.errors.full_messages }, status: :unauthorized
     end
   end
 
