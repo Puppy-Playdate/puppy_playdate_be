@@ -7,6 +7,7 @@ Rails.application.routes.draw do
         resources :socials
       end
       # resources :user_socials
+      post 'auth', to: "users/github_oauth#create", on: :collection
     end
   end
   
