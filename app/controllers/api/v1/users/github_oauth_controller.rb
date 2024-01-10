@@ -1,11 +1,11 @@
 class Api::V1::Users::GithubOauthController < ApplicationController
   def create
     user = User.find_or_create_by(uid: params[:uid])
-    user.username = params[:login]
+    user.name = params[:name]
+    user.email = params[:email]
     user.uid = params[:uid]
-    user.auth_token = params[:access_token]
-    user.password = "#{params[:uid]}#{params[:login]}#{params[:uid]}"
-    user.email = params[:login]
+    user.oauth_token = params[:access_token]
+    user.password = "#{params[:uid]}#{params[:email]}#{params[:uid]}"
     user.save!
 
     render json: UserSerializer.new(user)

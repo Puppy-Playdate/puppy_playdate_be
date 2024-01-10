@@ -10,6 +10,7 @@ describe "Users API", type: :request do
       expect(response).to be_successful
 
       users = JSON.parse(response.body, symbolize_names: true)
+
       expect(users[:data].count).to eq(5)
 
       users[:data].each do |user|
@@ -35,6 +36,7 @@ describe "Users API", type: :request do
       id = create(:user).id
 
       get api_v1_user_path(id)
+
       user = JSON.parse(response.body, symbolize_names: true)
   
       expect(response).to be_successful
@@ -96,6 +98,7 @@ describe "Users API", type: :request do
       patch api_v1_user_path(id), params: user_param
   
       user = User.find_by(id: id)
+
       expect(response).to be_successful
       expect(user.name).to_not eq(previous_name)
       expect(user.name).to eq("P. Sherman")
@@ -111,6 +114,7 @@ describe "Users API", type: :request do
       headers = {"CONTENT_TYPE" => "application/json"}
   
       post api_v1_users_path, headers: headers, params: JSON.generate(user: user_params)
+
       expect(response).to_not be_successful 
       expect(response).to have_http_status(401)
     end
@@ -147,6 +151,7 @@ describe "Users API", type: :request do
         user = User.create!(name: "James Sullivan", email: "sully@gmail.com", password: "password")
 
         get api_v1_find_by_email_path, params: { email: user.email, pass:"wrong" }
+
         response_body = JSON.parse(response.body, symbolize_names: true)
 
         expect(response).to_not be_successful
@@ -158,6 +163,7 @@ describe "Users API", type: :request do
         user = User.create!(name: "James Sullivan", email: "sully@gmail.com", password: "password")
 
         get api_v1_find_by_email_path, params: { email: "notreal@themoon.com", pass:"MoonM@n!" }
+        
         response_body = JSON.parse(response.body, symbolize_names: true)
 
         expect(response).to_not be_successful

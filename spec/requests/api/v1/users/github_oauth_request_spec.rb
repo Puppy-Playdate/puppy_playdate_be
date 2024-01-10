@@ -1,23 +1,23 @@
 require "rails_helper"
 
-RSpec.describe "Github Auth", type: :request do
-  it "returns user created by github auth" do
-    user_data = {
+RSpec.describe "GitHub Oauth", type: :request do
+  it "returns user created by GitHub Oauth" do
+    user_oauth_data = {
       uid: 97274592,
-      login: "mylogin",
-      access_token: "hdksikaskfdj"
+      name: "James P Sullivan",
+      email: "jpsullivan@wahoo.com",
+      access_token: "mikeismybff2001"
     }
-
-    post "/api/v1/users/auth", params: user_data
+    post api_v1_user_oauth_path(user_oauth_data[:uid]), params: user_oauth_data
 
     expect(response).to be_successful
 
     user = JSON.parse(response.body, symbolize_names: true)
-
+    
     expect(user[:data]).to be_a(Hash)
     
-    expect(user[:data][:attributes][:uid]).to eq(user_data[:uid].to_s)
-    expect(user[:data][:attributes][:username]).to eq(user_data[:login])
-    expect(user[:data][:attributes][:auth_token]).to eq(user_data[:access_token])
+    expect(user[:data][:attributes][:uid]).to eq(user_oauth_data[:uid].to_s)
+    expect(user[:data][:attributes][:email]).to eq(user_oauth_data[:email])
+    expect(user[:data][:attributes][:oauth_token]).to eq(user_oauth_data[:access_token])
   end
 end
