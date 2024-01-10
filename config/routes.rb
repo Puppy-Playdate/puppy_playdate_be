@@ -5,9 +5,10 @@ Rails.application.routes.draw do
       resources :users do
         resources :dogs
         resources :socials
+        
+        post 'auth', to: "users/github_oauth#create"
       end
       # resources :user_socials
-      post 'auth', to: "users/github_oauth#create", on: :collection
     end
   end
   
