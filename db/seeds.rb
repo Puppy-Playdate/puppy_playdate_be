@@ -15,3 +15,6 @@
 
   dog1 = user1.dogs.create!(name: "Fido", breed: "Lab", age: 5, size: 1, neutered: true)
   dog2 = user1.dogs.create!(name: "Bob", breed: "Pug", age: 3, size: 0, neutered: false)
+
+
+  # social1 = Social.create(:social)
