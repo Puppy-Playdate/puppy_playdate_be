@@ -6,8 +6,8 @@ Rails.application.routes.draw do
         resources :dogs
         resources :socials
         
-        post 'oauth', to: "users/github_oauth#create"
       end
+      post 'oauth', to: "users/github_oauth#create"
       # resources :user_socials
     end
   end
