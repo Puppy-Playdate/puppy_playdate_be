@@ -27,7 +27,7 @@ class Api::V1::SocialsController < ApplicationController
 
   # PATCH/PUT /api/v1/socials/1
   def update
-    @user_social = @user.socials.find(params[:id])
+    @user_social = Social.find(params[:id])
     if @user_social.update(social_params)
       render json: SocialSerializer.new(@user_social)
     else
