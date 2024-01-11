@@ -31,7 +31,7 @@ class Api::V1::SocialsController < ApplicationController
     if @user_social.update(social_params)
       render json: SocialSerializer.new(@user_social)
     else
-      render json: { error: @social.errors.full_messages }, status: :unprocessable_entity
+      render json: { status: 422, error: @user_social.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
