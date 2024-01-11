@@ -85,7 +85,7 @@ describe "Dogs API", type: :request do
                     })
       headers = {"CONTENT_TYPE" => "application/json"}
     
-      post api_v1_user_dogs_path(user.id, dog_params), headers: headers, params: JSON.generate(dog: dog_params)
+      post api_v1_user_dogs_path(user.id, dog_params), params: (dog_params)
       
       created_dog = Dog.last
 
