@@ -15,9 +15,18 @@ This project uses Ruby version 3.2.2.
 
 ### Database Setup
 
+Change directories into the project:
+`cd /puppy_playdate_be`
+
+Install all gems:
+`bundle install`
+
 To initialize the database, run the following commands:
 
 `rails db:{drop,create,migrate,seed}`
+
+### Schema
+![Screenshot 2024-01-12 at 10 42 26 AM](https://gist.github.com/assets/134735853/64185bf2-b5b1-4d84-81b0-1009598409a3)
 
 ### Running the Test Suite
 
@@ -55,7 +64,25 @@ In both terminals:
   - The backend runs on 'http://localhost:3000/'
   - The frontend runs on 'http://localhost:5000/'
 
-**GO HERE TO EXPLORE!**
+## Gems 
+
+- [Faraday](https://github.com/lostisland/faraday) gem to interact with APIs
+- [bcrypt](https://github.com/dcodeIO/bcrypt.js/blob/master/README.md)
+    - `gem "bcrypt", "~> 3.1.7"`
+- [JSONAPI Serializer](https://github.com/jsonapi-serializer/jsonapi-serializer) gem for formatting JSON responses
+
+#### Placed in `group :test` block:
+
+- [rspec-rails](https://github.com/rspec/rspec-rails) gem that is backbone of our testing architecture
+- [factory_bot](https://github.com/thoughtbot/factory_bot) gem to create models for testing data
+- [Faker](https://github.com/faker-ruby/faker) gem to mock and stub test data
+- [SimpleCov](https://github.com/simplecov-ruby/simplecov) gem for code coverage tracking
+- [ShouldaMatchers](https://github.com/thoughtbot/shoulda-matchers) gem for testing assertions
+- [Capybara](https://github.com/morris-lab/Capybara) gem for end to end testing 
+
+#### Placed in `group :development, :test` block:
+
+- [Pry](https://github.com/pry/pry) gem for debugging
 
 
 ## Running the tests
@@ -64,13 +91,13 @@ In both terminals:
 
 All tests should be passing.
 
-## API's Consumed
-
 ## API Endpoints
 
 ***Utilize `"http://localhost:3000/"` to access ALL endpoints.*** 
 
 #### Puppy Playdate Endpoints:
+
+For endpoint data please consult the spec/resquest files to see our mocked data. 
 
 **User CRUD**
 
@@ -142,34 +169,6 @@ All tests should be passing.
     
     - DELETE `/api/v1/users/:user_id/socials/:id`
 
-
-## Gems 
-
-- [Faraday](https://lostisland.github.io/faraday/#/)
-  - `gem "faraday"`
-- [bcrypt](https://github.com/dcodeIO/bcrypt.js/blob/master/README.md)
-    - `gem "bcrypt", "~> 3.1.7"`
-- [json:api](https://jsonapi.org/)
-    `gem 'jsonapi-serializer'`
-
-#### Placed in `group :test` block:
-
-- [rspec-rails](https://github.com/rspec/rspec-rails)
-    - `gem "rspec-rails"`
-- [factory_bot](https://github.com/thoughtbot/factory_bot)
-    - `gem "factory_bot_rails"`
-- [Faker](https://github.com/faker-ruby/faker)
-    - `gem "faker"`
-- [SimpleCov](https://github.com/simplecov-ruby/simplecov)
-    - `gem 'simplecov'`
-- [Shoulda Matchers](https://github.com/thoughtbot/shoulda-matchers)
-    - `gem "shoulda-matchers"`
-
-#### Placed in `group :development, :test` block:
-
-- [Pry](https://github.com/pry/pry)
-    - `gem "pry"`
-
 ## Contributors
 
 * Tommy Takahashi 
@@ -199,23 +198,5 @@ May use this area for any hat tip to anyone whose code is used, inspiration, hel
 ## PLACEHOLDER FOR PICTURES SHOWING EXAMPLES OR PARTS OF THE PROJECT WE'RE PROUD OF.
 
 
-
-
-## IMPORTANT INFO FOR DEVS
-
-**Info**
-- users have many dogs and socials
-- dogs and socials belong to users
-- We have a user_socials controller so if we get rid of the joins table take it out too
-- users and dogs basic crud functions happy and sad path tested.
-- if not merged into main yet follow these steps
-1. git checkout socials
-2. git pull origin socials
-    - this will give you access to all the current pushes we made to the socials branch blake can show you if you have any questions.
- 
-
-**TODO**
-- [ ] serializer test for socials 
-- [x] Create, Update, and Delete are all not being called on in the socials controller inside the method so need to do some digging. Seem to be the same issue though
 
 
