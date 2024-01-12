@@ -192,11 +192,4 @@ For endpoint data please consult the spec/resquest files to see our mocked data.
     * [Justin's Github](https://github.com/JustinSteel)
 
 
-## Acknowledgments
-May use this area for any hat tip to anyone whose code is used, inspiration, helpers (instructors), etc.
-
-## PLACEHOLDER FOR PICTURES SHOWING EXAMPLES OR PARTS OF THE PROJECT WE'RE PROUD OF.
-
-
-
 
