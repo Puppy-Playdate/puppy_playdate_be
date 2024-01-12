@@ -5,7 +5,6 @@ class Api::V1::Users::GithubOauthController < ApplicationController
     user.name = params[:name]
     user.email = "githubuser#{rand(0..100)}@github.com"
     user.password = rand(0..1000000).to_s
-    # require 'pry'; binding.pry
     user.save!
 
     render json: UserSerializer.new(user)
